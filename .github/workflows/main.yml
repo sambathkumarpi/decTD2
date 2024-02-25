@@ -3,7 +3,7 @@ name: Push to Pinata
 on:
   push:
     branches:
-      - master # Change this to your main branch if it's different
+      - main # Change this to your main branch if it's different
 
 jobs:
   push-to-pinata:
@@ -18,12 +18,12 @@ jobs:
       with:
         node-version: 14
 
-    - name: Install Dependencies
+    - name: Install Pinata CLI
       run: npm install -g @pinata/sdk
 
     - name: Push to Pinata
       run: |
-        pinata pinning pinFile \
+        $HOME/.npm-global/bin/pinata pinning pinFile \
         --source index.html \
         --pinataApiKey ${{ secrets.PINATA_API_KEY }} \
         --pinataSecretApiKey ${{ secrets.PINATA_SECRET_API_KEY }}
