@@ -1,0 +1,29 @@
+name: Push to Pinata
+
+on:
+  push:
+    branches:
+      - master # Change this to your main branch if it's different
+
+jobs:
+  push-to-pinata:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 14
+
+    - name: Install Dependencies
+      run: npm install -g @pinata/sdk
+
+    - name: Push to Pinata
+      run: |
+        pinata pinning pinFile \
+        --source index.html \
+        --pinataApiKey ${{ secrets.PINATA_API_KEY }} \
+        --pinataSecretApiKey ${{ secrets.PINATA_SECRET_API_KEY }}
